@@ -65,15 +65,19 @@ class LockedTask(Task):
         return slugify(task_key)[:250]
 
     @classmethod
+    def _get_owner_id(cls):
+        return urllib.parse.urlencode([
+            ('hostname', socket.gethostname()),
+            ('pid', os.getpid()),
+        ]).encode('utf-8')
+
+    @classmethod
     def _get_redis_lock(cls, task_key, expire=60, auto_renewal=True):
         try:
             redis_client = cache.client.get_client()
         except AttributeError:
             redis_client = StrictRedis.from_url(settings.REDIS_URL)
-        owner_id = urllib.parse.urlencode([
-            ('hostname', socket.gethostname()),
-            ('pid', os.getpid()),
-        ]).encode('utf-8')
+        owner_id = cls._get_owner_id()
         return redis_lock.Lock(redis_client, task_key, id=owner_id, expire=expire, auto_renewal=auto_renewal)
 
     @classmethod
@@ -91,6 +95,7 @@ class LockedTask(Task):
             expire = max(60, cls.task_lock_timeout)
             blocking = True
             timeout = cls.task_lock_timeout
+        owner_id = cls._get_owner_id()
         lock = cls._get_redis_lock(task_key, expire)
         acquired = False
         try:
