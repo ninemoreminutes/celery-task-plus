@@ -1,0 +1,31 @@
+# Development/test environment uses Python 3.5 - 3.8 (separate requirements files generated for each).
+
+argh  # needed by watchdog
+bumpversion
+celery[redis]
+django
+django-celery-beat
+django-celery-results
+django-debug-toolbar
+django-environ
+django-extensions
+django-redis
+django-site-utils
+flake8
+honcho
+ipython
+pycodestyle
+pip-tools
+psycopg2-binary
+pytest
+pytest-cov
+pytest-django
+pytest-flake8
+pytest-runner
+python-redis-lock
+setuptools-twine
+tox
+tox-gh-actions
+twine
+watchdog
+pyyaml  # needed by watchdog

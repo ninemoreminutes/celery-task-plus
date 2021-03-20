@@ -1,0 +1,3 @@
+django:  PYTHONUNBUFFERED=true python manage.py runserver
+celery:  PYTHONUNBUFFERED=true watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A test_project worker -E -l INFO
+beat:    PYTHONUNBUFFERED=true watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A test_project beat -l INFO

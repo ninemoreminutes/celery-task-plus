@@ -1,0 +1,13 @@
+_build
+build
+dist
+reports
+*.egg-info
+*.pyc
+*.pyo
+__pycache__
+.coverage*
+.pytest_cache
+.tox
+*.sqlite3
+.env

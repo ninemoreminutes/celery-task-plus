@@ -1,0 +1,4 @@
+recursive-include celery_task_plus *.py
+include LICENSE
+include README.rst
+recursive-exclude test_project *
